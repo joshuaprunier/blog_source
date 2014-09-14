@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <title>joshuaprunier.com</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/blog.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <br>
+          <br>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">Discovering creative solutions to complex problems</h1>
+      </div>
+
+      <div class="row">
+
+        <!-- Start blog main -->
+        <div class="col-sm-9 blog-main">
+
+          <!-- Start blog posts -->
+          <div class="blog-post">
+          {{range first 1 .Data.Pages.ByDate.Reverse}}
+              <h2 class="blog-post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+              <p class="blog-post-meta">{{.Date.Format "Jan 2 2006"}} by {{.Params.author}}</p>
+              {{.Content}}
+            </div>
+          {{end}}
+          <!-- End blog posts -->
+
+          <ul class="pager">
+          {{range $index, $elem := .Data.Pages.ByDate.Reverse}}
+            {{ if eq $index 1 }}
+            <li><a href="{{ .RelPermalink }}">Previous Post</a></li>
+            {{end}}
+          {{end}}
+          </ul>
+
+        </div>
+        <!-- End blog main -->
+
+        <!-- Start about -->
+        <div class="col-sm-3 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset" align="center">
+            {{template "partials/about.html" .}}
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="sidebar-module">
+            <h4>Recent Posts</h4>
+            <ul>
+              {{range first 10 .Data.Pages.ByDate.Reverse}}
+              {{if eq .Type "blog"}}
+              <li>{{.Date.Format "Jan 2 2006"}} - <a href="{{.RelPermalink}}">{{.Title}}</a></li>
+              <br>
+              {{end}}
+              {{end}}
+            </ul>
+          </div>
+        </div>
+        <!-- End about -->
+      </div>
+    </div>
+
+    <div class="blog-footer">
+      <p>&copy; Joshua Prunier 2014 <br> <a href="http://hugo.spf13.com" target="_blank"><img src="/static/img/hugo.png" height="25" /></a></p>
+      <p>
+        <a href="#">&uarr; Return to top &uarr;</a>
+      </p>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

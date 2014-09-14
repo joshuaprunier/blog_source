@@ -1,0 +1,10 @@
+{{template "partials/header.html" .}}
+              {{if eq .Type "blog"}}
+              <h2 class="blog-post-title"><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+              <p class="blog-post-meta">{{.Date.Format "Jan 2 2006"}} by {{.Params.author}}</p>
+              {{end}}
+{{.Params.tags}}
+              {{.Content}}
+            </div>
+          <!-- End blog posts -->
+{{template "partials/footer.html" .}}

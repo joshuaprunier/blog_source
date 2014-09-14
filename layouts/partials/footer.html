@@ -1,0 +1,55 @@
+          <ul class="pager">
+            {{if .Next}}
+            {{if and (eq .Next.Type "blog") (eq .Type "blog")}}
+            <li><a href="{{.Next.Permalink}}">Previous Post</a></li>
+            {{end}}
+            {{end}}
+            {{if .Prev}}
+            {{if and (eq .Prev.Type "blog") (eq .Type "blog")}}
+            <li><a href="{{.Prev.Permalink}}">Next Post</a></li>
+            {{end}}
+            {{end}}
+          </ul>
+
+        </div>
+        <!-- End blog main -->
+
+        <!-- Start about -->
+        <div class="col-sm-3 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset" align="center">
+            {{template "partials/about.html".}}
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="sidebar-module">
+            <h4>Recent Posts</h4>
+            <ul>
+	      {{range first 10 .Site.Recent.ByDate.Reverse}}
+              {{if eq .Type "blog"}}
+	      <li>{{.Date.Format "Jan 2 2006"}} - <a href="{{.RelPermalink}}">{{.Title}}</a></li>
+              <br> 
+              {{end}}
+              {{end}}
+            </ul>
+          </div>
+        </div>
+        <!-- End about -->
+      </div>
+    </div>
+
+    <div class="blog-footer">
+      <p>&copy; Joshua Prunier 2014 <br> <a href="http://hugo.spf13.com" target="_blank"><img src="/static/img/hugo.png" height="25" /></a></p>
+      <p>
+        <a href="#">&uarr; Return to top &uarr;</a>
+      </p>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    {{template "partials/analytics.html" .}}
+  </body>
+</html>

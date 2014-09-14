@@ -1,0 +1,65 @@
+﻿Joshua J. Prunier
+joshua.prunier@gmail.comhttp://linkedin.com/in/joshuaprunierhttp://joshuaprunier.com
+
+Database Administrator
+
+Highly motivated, quick learner with over fifteen years experience working in the IT field specializing in database administration and development. Proven ability to solve a wide variety of software and business issues. Excellent analytical, organizational, multi-tasking, planning and problem solving skills. Operate well independently or within a team. Eager to increase my knowledge and add to my technical skill set. Deal well under pressure and with rigorous deadlines. Looking for a challenge and love creative solutions to complex problems.
+
+
+Skills and Expertise
+
+• Certified MySQL DBA• System Administration• Performance Tuning• Debugging• Replication• Mentoring Junior Staff
+
+Technical Proficiencies
+
+Operating Systems: Linux (CentOS and Ubuntu), UNIX (FreeBSD and Solaris), Windows
+Languages: SQL, UNIX shell scripting, Go
+Databases: MySQL, Percona Server, MariaDB, SQLite, NoSQL concepts (key/value, graph, document)
+MySQL: Workbench, Proxy, Xtrabackup, Percona Toolkit
+Additional: Puppet, Git, Mercurial, Memcached, Sphinx, Solr, Nagios, Zabbix, Cacti
+
+
+Professional Experience
+
+Netprospex, Inc., Waltham, MA                                                             01/2012 - Present
+Database Administrator
+Senior MySQL database administrator responsible for over 50 MySQL 5.5 databases with intricate row based replication configurations including filters and cross internet communication. Manage and tune multi-terabyte MySQL databases with million plus row tables on solid state drives, as well as conventional storage in virtual and non-virtual environments. Investigate and offer solutions to database related issues and counsel colleagues on best practices working with MySQL.
+• Increase availability and performance of applications by gathering and analyzing server and database metrics with various monitoring tools.
+• Advise system administrator on optimal components and configuration for new and replacement database hardware.
+• Converted tables to InnoDB storage engine to increase performance, concurrency, durability and facilitate consistent online backups.
+• Greatly simplified administration by integrating user authentication with LDAP and proxying accounts to pre-defined privilege groups.
+• Code monitoring, backup, alerting and programs that automate administrative database tasks in the Go programming language.
+
+Audit Analytics, Sutton, MA                                                  	             04/2006 - 12/2011
+Database Development / Software Engineer
+Core contributor for a financial market intelligence startup supporting MySQL 5.1 databases. The role involved server hardware selection and builds, FreeBSD administration, MySQL administration and architecture, new product development as well as defect identification and bug fixes of existing code in various languages including SQL, PL/SQL, PHP and bash/ksh/csh.
+• Migrated various business processes from a single MySQL database to a new batch processing database to improve performance and increase availability for data entry employees.
+• Database performance tuning and business logic query optimization.
+• Drove a business continuity initiative including initial set up and ongoing maintenance duties of redundant offsite servers.
+• Supported external customers by delivering new data feeds, responding to questions or problems and using SQL and MS excel to deliver custom reports.
+
+Sun Microsystems, Nashua, NH        			  	           02/2002 – 12/2005
+Database Engineer
+Experience architecting, enhancing and maintaining large Oracle databases through coding of triggers, stored procedures, packages and business logic modules for new and existing applications. Worked with local and remote team members to organize and coordinate delivery of project milestones.
+• Assisted in the logical and physical modeling of CAI (Customer Asset Intelligence), a star schema data warehouse to track customer server hardware and software configurations.
+• Helped design and was responsible for coding the data import process for CAI using Unix shell scripts, Perl and SQL*Loader control files.
+• Coded triggers and stored procedures to generate history, perform soft deletion of rows, validate data, move data from staging to primary schema and gather statistics about data and processes.
+
+Sun Microsystems, Chelmsford, MA        			           06/1999 – 01/2002
+IT Software System Engineer
+Dynamic web application developer responsible for coding user interfaces in HTML, Javascript, JSP and business logic using SQL statements in Java to query Oracle databases via JDBC for various business critical applications. Gained knowledge of software development life cycle, writing technical specifications, coding products based on business specifications, using version control (RCS) and writing support documentation.
+• Developed with a coworker the Sun Partner Feed, a system written in UNIX shell scripts to facilitate movement of data files between internal and external customers.
+• Project lead of two consultants to deliver the contracts web tool, allowing retrieval and entry of contract information via an internal web site.
+• Key team member in developing a logistics dynamic web application to track faulty customer part replacements from the initial trouble call to the restocking of the refurbished part.
+
+
+
+Education and Training
+
+Oracle University
+Oracle Certified Professional MySQL 5.0 Database Administrator, November 2011
+
+Rochester Institute of Technology, Rochester, NY United States
+Course work towards a bachelor’s degree in Information Technology, 1999
+
+Recommendations and code examples available upon request.
