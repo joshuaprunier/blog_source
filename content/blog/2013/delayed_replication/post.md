@@ -12,7 +12,7 @@ Our developers often change a lot of rows with a single update statement. This u
 
 To show what replication is actually doing I have cloned the sakila.film table, omitting the indexes, inserted all its rows and finally updated the description column for all 1,000 rows in the new table.
 
-<pre><code>
+<pre>
 beefeater(test)> show master status;
 +----------------------+----------+--------------+------------------+
 | File                 | Position | Binlog_Do_DB | Binlog_Ignore_DB |
@@ -63,12 +63,12 @@ beefeater(test)> show master status;
 | beefeater-bin.000001 |   313847 |              |                  |
 +----------------------+----------+--------------+------------------+
 1 row in set (0.00 sec)
+</pre>
 
-</code></pre>
-
+<br>
 I have edited the output of mysqlbinlog to only show the entries related to the first row created by the insert and update&nbsp;statements&nbsp;above. The&nbsp;@ symbol followed by a number is a mapping to the columns in the table. So&nbsp;@1=film_id,&nbsp;@2=title, @3=description and so on. Note that the update statement records a before and after picture of the row. This is can be used in a pinch to fix mistaken updates if the damage is small instead of having to restore from backups.
 
-<pre><code>
+<pre>
 mysqlbinlog --base64-output=auto beefeater-bin.000001 | more
 ...
 ### INSERT INTO test.film
@@ -122,8 +122,9 @@ ockies'
 ###   @12=b'00001100'
 ###   @13=1368396106
 ...
-</code></pre>
+</pre>
 
+<br>
 So row-based replication is performing as named and creating a binary log event for each row affected. My single insert and update statement on the master then became 1,000 separate events on the slave.
 
 Digging in to the MySQL source code I was unable to confirm exactly how the SQL thread applies relay log events on a slave. I assume it is similar to what happens when a normal update statement is executed on a table with no indexes. The server must perform a full table scan to locate a single row. For a table with a million plus rows a million full table scans is expensive! A primary key or suitable unique index will prevent this type of problem.

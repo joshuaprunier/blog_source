@@ -17,13 +17,14 @@ The necessary steps to export and import InnoDB tables are in the XtraBackup doc
 </p>
 
 <p>
-Trite stands for <b>TR</b>ansport <b>I</b>nnodb <b>T</b>ables <b>E</b>fficiently and is also a nod to the repetitive manual steps required to move tablespaces. Trite is a client/server written in 100% <a href="http://golang.org/" target="_blank">Go</a> that leverages XtraBackups's import/export feature and aids a DBA in creating, recovering or refreshing databases. The initial problem that led me to create Trite is a common development database environment where I work. Multiple applications share the same database servers which requires each applications data be refreshed at different intervals. Before Trite we used mysqldump and it took the majority of a weekend for the data refresh to complete, even with good hardware and my.cnf's tuned for performance over crash resistance. With Trite we get the same results in a fraction of the time!
+Trite stands for <b>TR</b>ansport <b>I</b>nnodb <b>T</b>ables <b>E</b>fficiently and is also a nod to the repetitive manual steps required to move tablespaces. Trite is a client/server written in 100% <a href="http://golang.org/" target="_blank">Go</a> that leverages XtraBackups's import/export feature and aids a DBA in creating, recovering or refreshing databases. The initial problem that led me to create Trite is a common development database environment where I work. Multiple applications share the same database servers which requires each applications data be refreshed at different intervals. Before Trite we used mysqldump and it took the majority of a weekend for the data refresh to complete, even with good hardware and my.cnf's tuned for performance. With Trite we get the same results in a fraction of the time!
 </p>
 
 <p>
-Trite has three modes of operation: dump, server and client. Dump mode writes out create statements for schemas, tables, stored procedures, functions, triggers and views. Server mode makes the XtraBackup and dump create files accessible via HTTP. Client mode downloads the create statements and XtraBackup files from a Trite server to recreate database objects.
+Trite has three modes of operation: dump, server and client. Dump mode writes out create statements for schemas, tables, stored procedures, functions, triggers and views. Server mode makes the XtraBackup and dump create files accessible via a Go powered HTTP server. Client mode downloads the create statements and XtraBackup files from a Trite server to recreate database objects.
 </p>
 
+<br>
 <p>
 Twelve gigabytes of <a href="http://imdbpy.sourceforge.net/" target="_blank">IMDB</a> data will make a suitably sized database for an example. The hardware used is a woefully under powered laptop; 4 gigs of RAM, 32bit CPU, slow SATA hard drive. Before each data load the imdb schema was removed and MySQL restarted to wipe caches. It took just over two hours to restore from the dump file. This is with innodb_doublewrite turned off to try and speed up all the inserts.
 </p>
@@ -44,12 +45,13 @@ jprunier@beefeater:~/Downloads$ sudo du -sh /var/lib/mysql/imdb
 12G	/var/lib/mysql/imdb
 </pre>
 
+<br>
 <p>
 A binary backup of the database took 8 minutes with XtraBackup.
 </p>
 
 <pre>
-root@beefeater:~# innobackupex --user=root --password= /root
+root@beefeater:~# time innobackupex --user=root --password= /root
 
 ... output omitted ...
 
@@ -62,14 +64,15 @@ user	0m42.076s
 sys		0m31.524s
 </pre>
 
+<br>
 <p>
-And 16 seconds to prepare the tables for export. This will take longer depending on the amount of changes the database receives during the backup. It can sped up by giving the process more memory.
+And 16 seconds to prepare the tables for export. This will take longer depending on the amount of changes the database receives during the backup. The apply can be sped up by giving the innobackupex process more memory.
 </p>
 
 <pre>
 root@beefeater:~# time innobackupex --apply-log --use-memory=1G --export /root/2014-01-25_14-22-06
 
-... details omitted ...
+... output omitted ...
 
 140125 14:33:03  InnoDB: Starting shutdown...
 140125 14:33:07  InnoDB: Shutdown completed; log sequence number 70808870412
@@ -80,6 +83,7 @@ user	0m0.900s
 sys		0m0.620s
 </pre>
 
+<br>
 <p>
 A dump of the database objects should be done as close to the backup as possible. If the Trite create statement from a dump differs significantly from the copy of table taken with XtraBackup the table may fail to import.
 </p>
@@ -97,8 +101,9 @@ imdb: 21 tables, 0 procedures, 0 functions, 0 triggers, 0 views
 Total runtime = 2.19331264s
 </pre>
 
+<br>
 <p>
-In this example the Trite server is being run on the same machine as the database being restored. If your database is very large the XtraBackup, create dumps and Trite server will probably be on a different host.
+In this example the Trite server is being run on the same machine as the database being restored. If your database is very large the backup, create dumps and Trite server will probably be on a different host.
 </p>
 
 <pre>
@@ -108,8 +113,9 @@ root@beefeater:~# ./trite -server -dump_path=/root/localhost_dump20140125173337 
 Starting server listening on port 12000
 </pre>
 
+<br>
 <p>
-The Trite client was able to restore the imdb database in 13 minutes. Much faster than doing all those inserts over. You can run the client with multiple worker threads, the default is single threaded. The optimal number of workers depends on the size of your tables, how fast your disks are and how fast your network is if the server is remote. In the case of the laptop, multiple workers actually makes the restore time slower.
+The Trite client was able to restore the imdb database in 13 minutes. Much faster than doing all those inserts over with mysqldump. You can run the client with multiple worker threads, the default is single threaded. The optimal number of workers depends on the size of your tables, how fast your disks are and how fast your network is if the server is remote. In the case of the laptop, multiple workers actually makes the restore time slower.
 </p>
 
 <pre>
@@ -144,10 +150,12 @@ Applying functions for imdb
 Total runtime = 13m3.881954844s
 </pre>
 
+<br>
 <p>
-Some of the features I am planning on adding next are compression for transfer across slow networks and replication support so only objects conforming to a slaves replication filters will be applied.
+Xtrabackup can restore the entire database just as quick but you need to restore the entire backup. The power of Trite is being able to customize a restore. By removing files from the dump directory you can restore just spcific schemas or tables. You can also restore to a database that contains tables while it is online and responding to queries. Some of the features I am planning on adding next are compression for transfer across slow networks and replication support so only objects conforming to a slaves replication filters will be applied.
 </p>
 
+<br>
 <p>
 Trite does have some limitations. The full list can be found on the <a href="http://github.com/joshuaprunier/trite" target="_blank">GitHub</a> page but the top ones are:
 </p>
@@ -155,8 +163,8 @@ Trite does have some limitations. The full list can be found on the <a href="htt
 <div>
   <ul>
     <li>InnoDB file per table is required.</li>
-    <li>The database you are restoring to must be running Percona Server 5.1 or 5.5.</li>
-    <li>Windows is not supported since Percona Server and XtraBackup are required.</li>
+    <li>The database you are restoring to must be running Percona server 5.1, 5.5, 5.6 or Oracle MySQL 5.6 or MariaDB 5.5, 10.</li>
+    <li>Windows is not currently supported due to a few Linux specific lines of code.</li>
   </ul>
 </div>
 
