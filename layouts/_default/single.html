@@ -5,5 +5,23 @@
               {{end}}
               {{.Content}}
             </div>
+
           <!-- End blog posts -->
+          <ul class="pager">
+            {{if .Next}}
+            {{if and (eq .Next.Type "blog") (eq .Type "blog")}}
+            <li><a href="{{.Next.Permalink}}">Previous Post</a></li>
+            {{end}}
+            {{end}}
+            {{if .Prev}}
+            {{if and (eq .Prev.Type "blog") (eq .Type "blog")}}
+            <li><a href="{{.Prev.Permalink}}">Next Post</a></li>
+            {{end}}
+            {{end}}
+          </ul>
+
+        </div>
+        <!-- End blog main -->
+
+
 {{template "partials/footer.html" .}}
