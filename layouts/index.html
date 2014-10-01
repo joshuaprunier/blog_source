@@ -45,10 +45,10 @@
           {{range first 1 .Data.Pages.ByDate.Reverse}}
               <h2 class="blog-post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
               <p class="blog-post-meta">
-                {{.Date.Format "Jan 2 2006"}} by {{.Params.author}}
-                <br>
                 {{$base := .Site.BaseUrl}}
                 <i>Tags: {{range .Params.tags}} <a href="{{$base}}/tags/{{.}}">{{.}}</a> {{end}}</i>
+                <br>
+                {{.Date.Format "Jan 2 2006"}} by {{.Params.author}}
               </p>
               {{.Content}}
             </div>
