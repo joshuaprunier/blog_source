@@ -48,7 +48,7 @@
                 {{.Date.Format "Jan 2 2006"}} by {{.Params.author}}
                 <br>
                 {{$base := .Site.BaseUrl}}
-                <i>Tags: {{range .Params.tags}} <a href="{{$base}}/tags/{{.}}">{{.}}</a> {{end}}</i>
+                <i>Tags: {{range .Params.tags}} <a href="{{$base}}tags/{{.}}">{{.}}</a> {{end}}</i>
               </p>
               {{.Content}}
             </div>
