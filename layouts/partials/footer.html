@@ -8,7 +8,7 @@
           <div class="sidebar-module">
             <h4>Recent Posts</h4>
             <ul>
-	      {{range first 10 .Site.Recent.ByDate.Reverse}}
+	      {{range first 10 .Site.Pages.ByDate.Reverse}}
               {{if eq .Type "blog"}}
 	      <li>{{.Date.Format "Jan 2 2006"}} - <a href="{{.RelPermalink}}">{{.Title}}</a></li>
               <br> 

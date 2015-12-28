@@ -3,7 +3,7 @@
               <p class="blog-post-meta">
                 {{.Date.Format "Jan 2 2006"}} by {{.Params.author}}
                 <br>
-                {{$base := .Site.BaseUrl}}
+                {{$base := .Site.BaseURL}}
                 <i>Tags: {{range .Params.tags}} <a href="{{$base}}tags/{{.}}">{{.}}</a> {{end}}</i>
               </p>
               {{.Content}}
